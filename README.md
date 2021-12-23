@@ -1,8 +1,7 @@
 # Malogany
 
-![Sample of Malogany's output](screenshot.png)
-
 <p align="center">
+<img alt="Sample of Malogany's output" src="screenshot.png"><br>
 <b>Simple tree/hierarchical logging library</b><br>
 <i>(Tree > Mahogany) + Logging => Malogany</i>
 </p>

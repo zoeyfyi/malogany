@@ -2,6 +2,15 @@
 name = "malogany"
 version = "0.1.0"
 edition = "2021"
+authors = ["Zoey Sheffield <me@zoey.fyi>"]
+description = "Simple tree/hierarchical logging library"
+readme = "README.md"
+homepage = "https://github.com/zoeyfyi/malogany"
+repository = "https://github.com/zoeyfyi/malogany"
+license = "MIT"
+keywords = ["logging"]
+categories = ["development-tools::debugging"]
+
 
 [dependencies]
 smallvec = "1.7.0"

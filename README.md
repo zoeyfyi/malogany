@@ -13,7 +13,7 @@ Add the following to your `Cargo.toml`
 ```toml
 [dependencies]
 log = "0.4"
-malogany = "0.1"
+malogany = "0.2"
 ```
 
 Initalize Malogany with the max log level
@@ -38,7 +38,7 @@ Branches are only rendered in debug builds for performance reasons. Future versi
 In version `0.2` you can use [`scopeguard`](https://github.com/bluss/scopeguard) to automatically exit the branch when the guard returned by `enter_branch_scoped` falls out of scope. To enable this feature, add the following to your `Cargo.toml`:
 
 ```toml
-malogany = { version = "0.1" , features = ["scopeguard"] }
+malogany = { version = "0.2" , features = ["scopeguard"] }
 ```
 
 Then use `malogany::enter_branch_scoped` instead of `malogany::enter_branch`. 

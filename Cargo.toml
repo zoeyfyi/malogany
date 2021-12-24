@@ -1,6 +1,6 @@
 [package]
 name = "malogany"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Zoey Sheffield <me@zoey.fyi>"]
 description = "Simple tree/hierarchical logging library"
@@ -16,3 +16,4 @@ categories = ["development-tools::debugging"]
 smallvec = "1.7.0"
 log = { version = "0.4", features = ["std"] }
 termcolor = "1.1.2"
+scopeguard = { version = "1.1.0", optional = true }

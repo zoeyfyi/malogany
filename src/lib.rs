@@ -1,3 +1,5 @@
+#[cfg(feature = "scopeguard")]
+use scopeguard::ScopeGuard;
 #[cfg(debug_assertions)]
 use smallvec::SmallVec;
 #[cfg(debug_assertions)]
@@ -6,6 +8,7 @@ use std::cell::RefCell;
 use std::io::Write;
 
 use log::{Level, Log, SetLoggerError};
+
 use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 
 #[cfg(debug_assertions)]
@@ -138,19 +141,19 @@ pub fn enter_branch<S: AsRef<str>>(_name: S) {}
 pub fn exit_branch() {
     LEVELS.with(|levels| levels.borrow_mut().pop());
     print_preamble();
-    
+
     let mut stdout = StandardStream::stdout(ColorChoice::Auto);
     stdout
-    .set_color(
-        ColorSpec::new()
-        .set_bg(Some(COLOR_MUTED_WHITE))
-        .set_fg(Some(COLOR_DARKER_BLACK)),
-    )
-    .unwrap();
+        .set_color(
+            ColorSpec::new()
+                .set_bg(Some(COLOR_MUTED_WHITE))
+                .set_fg(Some(COLOR_DARKER_BLACK)),
+        )
+        .unwrap();
     let name = NAMES.with(|branches| branches.borrow_mut().pop().unwrap());
     write!(&mut stdout, " {} ", name).unwrap();
     stdout.reset().unwrap();
-    
+
     writeln!(&mut stdout, "").unwrap();
 
     // update state
@@ -160,3 +163,18 @@ pub fn exit_branch() {
 #[cfg(not(debug_assertions))]
 #[inline(always)]
 pub fn exit_branch() {}
+
+#[cfg(feature = "scopeguard")]
+#[inline(always)]
+pub fn enter_branch_scoped<S: Clone + AsRef<str>>(
+    name: S,
+) -> ScopeGuard<(), Box<dyn FnOnce(()) -> ()>> {
+    enter_branch(name.clone());
+    let name_str = String::from(name.as_ref());
+    scopeguard::guard(
+        (),
+        Box::new(move |_| {
+            exit_branch();
+        }),
+    )
+}
